@@ -1,3 +1,5 @@
+English | [中文](./README-zh.md)
+
 # vue-element-table-tooltip
 
 A vue directive for element-ui to fix this issue: [[Bug Report] el-table component adds show-overflow-tooltip, and text in tooltip cannot be copied by mouse selection](https://github.com/ElemeFE/element/issues/13916)
@@ -18,13 +20,14 @@ yarn add vue-element-table-tooltip
 
 ## how to use
 
-Import it in `main.js`, and configure the theme option. If theme is not provided, dark is default.
+Import it in `main.js`, and configure the theme and the directive name. If theme is not provided, dark is default. If directive name if not provided, `element-table-tooltip` is default.
 
 ```js
 import elementTableTooltip from "vue-element-table-tooltip";
 
 Vue.use(elementTableTooltip, {
   theme: "dark", // dark | light
+  name: "element-table-tooltip",
 });
 ```
 
@@ -36,9 +39,9 @@ import { darkTooltip, lightTooltip } from 'vue-element-table-tooltip'
 export default {
 	...
 	directives: {
-    	"element-table-tooltip": darkTooltip,
-    },
-    ...
+    "element-table-tooltip": darkTooltip,
+  },
+  ...
 }
 ```
 

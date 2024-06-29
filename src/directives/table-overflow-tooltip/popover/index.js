@@ -12,20 +12,16 @@ export const popover = ({ reference, content, effect }) => {
   }
   const on = {
     closed: () => {
-      if (instance) {
-        instance.$destroy()
-      }
+      instance && instance.$destroy()
     },
-    "hook:destroyed": () => {
+    "hook:beforeDestroy": () => {
+      instance && instance.$destroy()
       el.remove()
     },
   }
   instance = new Vue({
     el,
     render: h => h(Main, { props, on })
-  })
-  instance.$on("hook:destroyed", () => {
-    el.remove()
   })
   document.body.appendChild(el)
   return instance

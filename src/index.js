@@ -4,16 +4,16 @@ import {
 } from './directives/table-overflow-tooltip/index.js';
 
 const install = function (Vue, options) {
+  const name = options && options.name || "element-table-tooltip"
   if (options && options.theme === 'light') {
-    Vue.directive("element-table-tooltip", lightTooltip)
+    Vue.directive(name, lightTooltip)
   } else {
-    Vue.directive("element-table-tooltip", darkTooltip)
+    Vue.directive(name, darkTooltip)
   }
 }
 
-export default install
-
 export {
+  install as default,
   darkTooltip,
   lightTooltip,
 }

@@ -75,6 +75,9 @@ export default {
   created() {
     
   },
+  beforeDestroy(){
+    this.close()
+  },
   mounted() {
     this.$nextTick(() => {
       this.show()
