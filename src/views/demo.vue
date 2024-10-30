@@ -13,11 +13,18 @@
         prop="column2"
         v-element-table-tooltip
       ></el-table-column>
-      <el-table-column
-        label="overflow"
-        prop="column3"
-        v-element-table-tooltip
-      ></el-table-column>
+      <el-table-column label="overflow">
+        <el-table-column
+          label="overflow-1"
+          prop="column3"
+          v-element-table-tooltip
+        ></el-table-column>
+        <el-table-column
+          label="overflow-2"
+          prop="column3"
+          v-element-table-tooltip
+        ></el-table-column>
+      </el-table-column>
     </el-table>
   </div>
 </template>
