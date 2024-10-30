@@ -4,6 +4,14 @@ const directive = theme => {
   const map = new WeakMap()
   const update = (el, binding, vnode, oldVnode) => {
     const table = vnode.componentInstance.$parent
+    // for grouping table head
+    const getTableInstance = () => {
+      let parent = table;
+      while (parent && !parent.tableId) {
+        parent = parent.$parent;
+      }
+      return parent
+    }
     if (map.has(table)) {
       const item = map.get(table)
       item.controller && item.controller.abort() // destroy old eventListenner
@@ -31,7 +39,7 @@ const directive = theme => {
           map.delete(table)
         })
         if (columnId && map.has(table)) {
-          const cells = table.$el.querySelectorAll(`tbody td.${columnId} .cell`)
+          const cells = getTableInstance(table).$el.querySelectorAll(`tbody td.${columnId} .cell`)
           for (const cell of cells) {
             cell.style.overflow = "hidden"
             cell.style.whiteSpace = "nowrap"
