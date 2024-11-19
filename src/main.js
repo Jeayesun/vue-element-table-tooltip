@@ -6,7 +6,7 @@ import tableTooltip from '@/index.js'
 Vue.config.productionTip = false
 
 Vue.use(tableTooltip, {
-  theme: "light", // dark | light
+  theme: "dark", // dark | light
 })
 
 new Vue({

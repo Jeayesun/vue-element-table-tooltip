@@ -4,7 +4,10 @@
     :reference="reference"
     placement="top"
     trigger="hover"
-    @show="onShow"
+    :popper-class="`${darkClass} ${styles['popover']}`"
+    @hook:mounted="removePopperClass"
+    @show="removePopperClass"
+    @hide="removePopperClass"
     @after-leave="onAfterLeave"
     @after-enter="onAfterEnter"
   >
@@ -15,6 +18,7 @@
 <script>
 import { Popover as ElPopover } from 'element-ui';
 import 'element-ui/lib/theme-chalk/popover.css'
+import styles from "./style.module.scss"
 
 export default {
   name: 'Popover',
@@ -38,7 +42,7 @@ export default {
   },
   data(){
     return {
-      
+      styles,
     };
   },
   methods: {
@@ -48,21 +52,19 @@ export default {
     close(){
       this.$refs.popover.doClose()
     },
-    onShow(){
-      const popover = this.$refs.popover.$refs.popper
-      popover.style.padding = "0 12px"
-      popover.style.minWidth = 0
-      if (this.effect === "dark") {
-        popover.classList.remove("el-popper")
-        popover.classList.add("is-dark")
-        popover.classList.add("el-tooltip__popper")
-        popover.style.borderWidth = 0
+    removePopperClass(){
+      if(this.effect === "dark"){
+        this.$nextTick(() => {
+          // fix: when the effect is set to dark, quickly leaving and returning to the popover may sometimes cause the effect to change to light.
+          this.$refs.popover.$refs.popper.classList.remove("el-popper")
+        })
       }
     },
     onAfterLeave(){
       this.$emit("closed")
     },
     onAfterEnter(){
+      this.removePopperClass()
       this.$emit("opened")
     },
   },
@@ -70,7 +72,9 @@ export default {
     
   },
   computed: {
-    
+    darkClass(){
+      return this.effect === "dark" ? `is-${this.effect} el-tooltip__popper` : ""
+    }
   },
   created() {
     
@@ -79,9 +83,7 @@ export default {
     this.close()
   },
   mounted() {
-    this.$nextTick(() => {
-      this.show()
-    })
+    this.show()
   },
 }
 </script>
